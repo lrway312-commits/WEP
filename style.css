@@ -1,0 +1,192 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,700;1,300&family=Montserrat:wght@100;400;700;900&display=swap');
+
+:root {
+    --bg-light: #FBFBFA;
+    --text-dark: #1A1A1A;
+    --accent-gold: #B68D40;
+    --glass-bg: rgba(255, 255, 255, 0.4);
+    --glass-border: rgba(255, 255, 255, 0.6);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+    font-family: 'Montserrat', sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* --- Navigation --- */
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5vw;
+    z-index: 100;
+    /* CSS Glassmorphism 3.0 */
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.logo {
+    font-family: 'Cormorant', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
+
+.nav-links {
+    display: flex;
+    gap: 3rem;
+    list-style: none;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* --- Hero Section --- */
+.hero {
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-left: 10vw;
+    background-image: url('https://images.unsplash.com/photo-1515562141207-7a88fb0ce33e?q=80&w=2600&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+}
+
+/* Glass panel over hero */
+.hero-glass-panel {
+    background: rgba(251, 251, 250, 0.7);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    padding: 4rem;
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    max-width: 500px;
+}
+
+.hero-title {
+    font-family: 'Cormorant', serif;
+    font-size: 4rem;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+}
+
+.hero-subtitle {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.btn-primary {
+    padding: 1rem 3rem;
+    background: var(--text-dark);
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: var(--accent-gold);
+}
+
+/* --- Product Grid --- */
+.collections {
+    padding: 8rem 5vw;
+    text-align: center;
+}
+
+.section-title {
+    font-family: 'Cormorant', serif;
+    font-size: 3rem;
+    margin-bottom: 3rem;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.product-card {
+    position: relative;
+    overflow: hidden;
+    /* Glass Effect on cards */
+    background: rgba(255,255,255, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    padding: 1rem;
+    text-align: center;
+    transition: transform 0.4s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-10px);
+}
+
+.product-image {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    margin-bottom: 1rem;
+}
+
+.product-title {
+    font-family: 'Cormorant', serif;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.product-price {
+    font-size: 0.9rem;
+    color: var(--accent-gold);
+}
+
+/* --- 3D Viewer Section --- */
+.viewer-section {
+    position: relative;
+    width: 100%;
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #E8E6DF; /* Soft elegant gray/beige */
+    overflow: hidden;
+}
+
+model-viewer {
+    width: 100%;
+    height: 100%;
+    --poster-color: transparent;
+}
+
+.viewer-overlay {
+    position: absolute;
+    bottom: 5rem;
+    left: 5rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(25px);
+    border: 1px solid var(--glass-border);
+    padding: 3rem;
+    max-width: 400px;
+    border-radius: 10px;
+}

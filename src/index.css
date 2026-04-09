@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+@theme {
+  --color-gold: oklch(75% 0.12 85);
+  --color-ivory: oklch(98% 0.01 265);
+  --color-luxury-black: oklch(10% 0.01 265);
+  --color-gold-glow: oklch(75% 0.12 85 / 0.15);
+  
+  --font-serif: "Playfair Display", serif;
+  --font-sans: "Inter", sans-serif;
+}
+
+@layer base {
+  :root {
+    /* ── Luxury Motion Tokens ── */
+    --ease-luxury: cubic-bezier(0.16, 1, 0.3, 1);
+    --duration-slow: 800ms;
+    --duration-normal: 400ms;
+    
+    background-color: var(--color-ivory);
+    color: var(--color-luxury-black);
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-serif);
+    letter-spacing: -0.02em;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+@layer utilities {
+  .glass-card {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .gold-gradient-text {
+    background: linear-gradient(to right, #C5A059, #F9F2B3, #C5A059);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .reveal-up {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity var(--duration-slow) var(--ease-luxury),
+                transform var(--duration-slow) var(--ease-luxury);
+  }
+
+  .reveal-up.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .glow-hover {
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .glow-hover:hover {
+    box-shadow: 0 0 20px var(--color-gold-glow);
+  }
+}
