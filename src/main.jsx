@@ -5,6 +5,7 @@ import Oceanic from './pages/Oceanic'
 import Atelier from './pages/Atelier'
 import GoldStore from './pages/GoldStore'
 import LuxuryHome from './pages/LuxuryHome'
+import CollectionVault from './pages/CollectionVault'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -15,6 +16,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/atelier" element={<Atelier />} />
         <Route path="/abyss" element={<Oceanic />} />
         <Route path="/vault" element={<GoldStore />} />
+        <Route path="/collection/:type" element={<CollectionVault />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

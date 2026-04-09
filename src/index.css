@@ -1,67 +1,148 @@
 @import "tailwindcss";
 
 @theme {
-  --color-gold: oklch(75% 0.12 85);
-  --color-ivory: oklch(98% 0.01 265);
-  --color-luxury-black: oklch(10% 0.01 265);
-  --color-gold-glow: oklch(75% 0.12 85 / 0.15);
-  
   --font-serif: "Playfair Display", serif;
   --font-sans: "Inter", sans-serif;
+  --color-gold: #D4AF37;
+  --color-gold-light: #F9F2B3;
+  --color-luxury-black: #0A0A0A;
+  --color-ivory: #F5F0EB;
 }
 
 @layer base {
-  :root {
-    /* ── Luxury Motion Tokens ── */
-    --ease-luxury: cubic-bezier(0.16, 1, 0.3, 1);
-    --duration-slow: 800ms;
-    --duration-normal: 400ms;
-    
-    background-color: var(--color-ivory);
-    color: var(--color-luxury-black);
-  }
-
-  h1, h2, h3, h4 {
-    font-family: var(--font-serif);
-    letter-spacing: -0.02em;
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
   }
 
   body {
-    font-family: var(--font-sans);
+    background: #0a0a0a;
+    color: #f5f0eb;
+    overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background: #D4AF37;
+    color: #0a0a0a;
   }
 }
 
 @layer utilities {
-  .glass-card {
-    background: rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+  /* ═══════════════════════════════════════
+     GLASSMORPHISM SYSTEM
+  ═══════════════════════════════════════ */
+  .glass {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(40px) saturate(180%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .glass-strong {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(60px) saturate(200%);
+    -webkit-backdrop-filter: blur(60px) saturate(200%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 
+      0 8px 32px rgba(0,0,0,0.3),
+      inset 0 1px 0 rgba(255,255,255,0.05);
   }
 
-  .gold-gradient-text {
-    background: linear-gradient(to right, #C5A059, #F9F2B3, #C5A059);
+  /* ═══════════════════════════════════════
+     GOLD SHINE TEXT
+  ═══════════════════════════════════════ */
+  .text-shine {
+    background: linear-gradient(
+      135deg,
+      #9c7c22 0%,
+      #D4AF37 25%,
+      #fefae0 50%,
+      #D4AF37 75%,
+      #9c7c22 100%
+    );
+    background-size: 200% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    animation: goldShift 6s linear infinite;
   }
 
-  .reveal-up {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity var(--duration-slow) var(--ease-luxury),
-                transform var(--duration-slow) var(--ease-luxury);
+  @keyframes goldShift {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
   }
 
-  .reveal-up.active {
-    opacity: 1;
-    transform: translateY(0);
+  /* ═══════════════════════════════════════
+     IMAGE INSIDE TEXT (GOLD LEAF TEXTURE)
+  ═══════════════════════════════════════ */
+  .text-image-fill {
+    background-image: url('https://images.unsplash.com/photo-1549490349-8643362247b5?q=80&w=2000&auto=format&fit=crop'); /* Distinct Gold Leaf Texture */
+    background-size: cover;
+    background-position: center;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: brightness(1.1) saturate(1.2);
+    -webkit-text-stroke: 1px rgba(212, 175, 55, 0.3);
   }
-  
-  .glow-hover {
-    transition: box-shadow 0.3s ease;
+
+  /* ═══════════════════════════════════════
+     FILM GRAIN (SUBTLE)
+  ═══════════════════════════════════════ */
+  .grain::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
-  
-  .glow-hover:hover {
-    box-shadow: 0 0 20px var(--color-gold-glow);
+
+  /* ═══════════════════════════════════════
+     LIQUID BACKGROUND SYSTEM (DIVINE FLOW)
+  ═══════════════════════════════════════ */
+  .liquid-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+    filter: url(#water-filter) blur(20px); /* Links to SVG filter in LuxeHero */
+  }
+
+  .blob {
+    position: absolute;
+    width: 60vw;
+    height: 60vw;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.15;
+    animation: blobFloat 25s infinite ease-in-out;
+  }
+
+  @keyframes blobFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(10vw, -15vw) scale(1.1); }
+    66% { transform: translate(-5vw, 10vw) scale(0.9); }
+  }
+
+  .animation-delay-5000 { animation-delay: 5s; }
+  .animation-delay-10000 { animation-delay: 10s; }
+
+  /* ═══════════════════════════════════════
+     CURSOR GLOW (MODIFIED FOR HIGHER VISIBILITY)
+  ═══════════════════════════════════════ */
+  .cursor-glow {
+    position: fixed;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212,175,55,0.12) 0%, transparent 65%);
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: all 0.4s ease-out;
+    mix-blend-mode: soft-light;
   }
 }

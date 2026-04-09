@@ -1,110 +1,109 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ShoppingBag } from 'lucide-react';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const products = [
   {
     id: 1,
     name: "Ottoman Filigree Ring",
-    price: "$ 450",
+    price: "₺15,700",
     image: "/images/ring.png",
     category: "Rings"
   },
   {
     id: 2,
     name: "Anatolian Teardrop Earrings",
-    price: "$ 320",
+    price: "₺8,900",
     image: "/images/earrings.png",
     category: "Earrings"
   },
   {
     id: 3,
     name: "Grand Bazaar Gold Bracelet",
-    price: "$ 580",
+    price: "₺12,500",
     image: "/images/bazaar.png",
     category: "Bracelets"
   },
   {
     id: 4,
     name: "Sultan's Heritage Pendant",
-    price: "$ 750",
+    price: "₺22,000",
     image: "/images/hero.png",
     category: "Necklaces"
   }
 ];
 
-function ProductCard({ product, index }) {
-  return (
-    <motion.div 
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
-      viewport={{ once: true }}
-      className="group"
-    >
-      <div className="relative aspect-[3/4] overflow-hidden bg-white mb-6">
-        <img 
-          src={product.image} 
-          alt={product.name}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-        />
-        
-        {/* Hover Overlay */}
-        <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-        
-        {/* Quick Add Button */}
-        <div className="absolute bottom-6 left-0 w-full px-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-          <button className="w-full bg-luxury-black text-white text-[10px] uppercase tracking-[0.2em] py-4 flex items-center justify-center space-x-2 hover:bg-gold transition-colors duration-300">
-            <ShoppingBag size={14} />
-            <span>Add to Cart</span>
-          </button>
-        </div>
-      </div>
-
-      <div className="text-center">
-        <p className="text-[10px] uppercase tracking-[0.2em] text-gold mb-2">{product.category}</p>
-        <h4 className="text-luxury-black text-base font-serif mb-2">{product.name}</h4>
-        <p className="text-luxury-black/60 text-sm">{product.price}</p>
-      </div>
-    </motion.div>
-  );
-}
-
 export default function GoldenCatalog() {
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from(".catalog-item", {
+        y: 80,
+        opacity: 0,
+        stagger: 0.12,
+        duration: 1.2,
+        ease: "expo.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 65%",
+        }
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="py-32 bg-ivory" id="catalog">
-      <div className="container mx-auto px-6">
-        <div className="max-w-2xl mx-auto text-center mb-24">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-            viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-serif mb-6 text-luxury-black"
-          >
-            Our Masterpiece <span className="italic">Catalog</span>
-          </motion.h2>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="text-luxury-black/50 text-sm uppercase tracking-widest leading-relaxed"
-          >
+    <section ref={sectionRef} className="py-32 bg-[#0a0a0a]" id="catalog">
+      <div className="max-w-[1200px] mx-auto px-8">
+        {/* Header */}
+        <div className="max-w-2xl mx-auto text-center mb-20">
+          <p className="text-[11px] uppercase tracking-[0.8em] text-[#D4AF37] mb-4">Curated Pieces</p>
+          <h2 className="text-5xl font-serif mb-6">
+            Our Masterpiece <span className="italic text-shine">Catalog</span>
+          </h2>
+          <p className="text-white/40 text-sm leading-relaxed">
             Select your unique style, whether it's a single masterpiece or an eclectic mix from our century-old heritage collections.
-          </motion.p>
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
-          {products.map((product, index) => (
-            <ProductCard key={product.id} product={product} index={index} />
+        {/* Product Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {products.map((product, i) => (
+            <div key={product.id} className="catalog-item group cursor-pointer">
+              {/* Image Container - Glass Frame */}
+              <div className="relative aspect-[3/4] overflow-hidden rounded-[20px] glass-strong mb-5">
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="w-full h-full object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-110"
+                />
+                {/* Hover Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                {/* Add to Cart */}
+                <div className="absolute bottom-4 left-4 right-4 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                  <button className="w-full glass-strong rounded-full py-3 flex items-center justify-center gap-2 text-white hover:bg-[#D4AF37]/20 transition-colors">
+                    <ShoppingBag size={14} />
+                    <span className="text-[9px] uppercase tracking-[0.3em]">Add to Cart</span>
+                  </button>
+                </div>
+              </div>
+              {/* Info */}
+              <p className="text-[9px] uppercase tracking-[0.5em] text-[#D4AF37] mb-1">{product.category}</p>
+              <h4 className="text-sm font-serif text-white/80 mb-1">{product.name}</h4>
+              <p className="text-white/40 text-xs">{product.price}</p>
+            </div>
           ))}
         </div>
 
-        <div className="mt-24 text-center">
-          <button className="text-xs uppercase tracking-[0.3em] border-b border-luxury-black/20 pb-2 hover:border-gold hover:text-gold transition-all duration-300">
+        {/* CTA */}
+        <div className="mt-20 text-center">
+          <a href="#" className="inline-block text-[10px] uppercase tracking-[0.5em] text-[#D4AF37] border border-[#D4AF37]/30 px-10 py-4 rounded-full hover:bg-[#D4AF37]/10 transition-all duration-500">
             Browse Full Catalog
-          </button>
+          </a>
         </div>
       </div>
     </section>
