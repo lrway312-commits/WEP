@@ -7,6 +7,7 @@ export const vaultData = {
     subtitle: 'The Circle of Legacy',
     description: 'Masterpieces forged in fire. Each ring carries the weight of a century-old heritage.',
     items: [
+      { id: 99, name: 'AI Test Genesis', price: '₺10,000', image: 'https://res.cloudinary.com/dqkrdtjtr/image/upload/v1775765373/test_sync_jewel.png' },
       { id: 1, name: 'Royal Signet Diamond', price: '₺32,000', image: '/images/ring.png' },
       { id: 2, name: 'Obsidian Gold Band', price: '₺18,500', image: '/images/hero.png' },
       { id: 3, name: 'Sultan\'s Heritage', price: '₺24,000', image: '/images/ring.png' },
